@@ -1,0 +1,44 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:hasRecordId"
+                access="global"
+                controller="accController">
+     <aura:attribute name="accountRecord" type="Object"/>
+
+    <aura:attribute name="accList" type="Account[]"/>
+    <aura:attribute name="bool" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="conList" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid">
+        <thead>
+    <tr class="slds-text-title--caps">
+        <th scope="col">
+        <div class="slds-truncate" title="Name">ACCOUNT NAME</div>
+        </th>
+        <th scope="col">
+        <div class="slds-truncate" title="Phone">Phone</div>
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+           
+            <aura:iteration items="{!v.accList}" var="acc">
+                
+        <tr>
+            
+              <td>{!acc.Name}</td>  
+            <td>{!acc.Phone}</td>
+            <lightning:button name="{!acc.Id}" label="Delete" variant="destructive" onclick="{!c.handleClick}"/>
+            <lightning:button name="{!acc.Id}" label="Edit" variant="brand" onclick="{!c.editRecord}"/>
+            </tr>
+              
+            </aura:iteration>
+        </tbody>
+    </table>
+   <aura:if isTrue="{!v.bool}">
+        <lightning:recordForm
+        recordId = "{!v.recordId}"
+        objectApiName="Account"
+        layoutType="Compact"
+        mode="edit" />
+    </aura:if>
+</aura:component>
